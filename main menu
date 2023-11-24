@@ -1,0 +1,28 @@
+function setup() {
+  createCanvas(800, 800);
+}
+
+function draw() {
+  // Set the background to a radial gradient from red to black
+  backgroundRadialGradient(800, 800, color(255, 0, 0), color(0));
+
+  // Draw the text in the center
+  textSize(150);
+  textAlign(CENTER, CENTER);
+  textFont('Chiller');
+  textStyle(BOLDITALIC);
+  fill(255);
+  text('Nocturne', width / 2.01, height / 3.01);
+  fill(0);
+  text('Nocturne', width / 2, height / 3);
+}
+
+function backgroundRadialGradient(w, h, c1, c2) {
+  noFill();
+  for (let r = 0; r <= sqrt(sq(w / 2) + sq(h / 2)); r++) {
+    let inter = map(r, 0, sqrt(sq(w / 2) + sq(h / 2)), 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    ellipse(w / 2, h / 2, r * 2, r * 2);
+  }
+}
