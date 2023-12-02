@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        background-color: black;
+        color: white;
+        font-family: Chiller;
+      }
+      h1 {
+        text-align: center;
+      }
+      h4 {
+        padding: 10% 10% 10% 10%;
+        padding-top: 0px;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+      }
+
+      canvas {
+        border: 1px solid white;
+      }
+      
+      canvas#canvas {
+        width: 0px;
+        height: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <canvas id="canvas"></canvas>
+    </main>
+    <script src="variables.js"></script>
+    <script src="player.js"></script>
+    <script src="checkpoint.js"></script>
+    <script src="collisions.js"></script>
+    <script src="enemy.js"></script>
+    <script src="dialog.js"></script>
+    <script src="shooting.js"></script>
+    <script src="sketch.js"></script>
+
+    <h1>About the game:</h1>
+    <h4>The goal of the game is to keep your character alive and kill enemies.<br>By killing enemies, the
+      player gains points.<br>These points can then be used to unlock checkpoints and move on to
+      further levels.<br>Throughout the game, the player will read through a story of the character and
+      their state of depression.<br>Finish the game to gain insight into the character’s mental state and
+      how their life continues. (Hint: it’s all an illusion!)</h4>
+
+  </body>
+</html>

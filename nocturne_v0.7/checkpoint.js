@@ -1,0 +1,99 @@
+function StaticCollisionCheck(Enemy) {
+  for (let i = Statics.length - 1; i >= 0; i--) {
+    Static = Statics[i];
+    if (
+      Enemy.x + Enemy.radius > Static.x &&
+      Enemy.x - Enemy.radius < Static.x + Static.w &&
+      Enemy.y + Enemy.radius > Static.y &&
+      Enemy.y - Enemy.radius < Static.y + Static.h
+    ) {
+      //if colliding
+      if (Enemy.y > Static.y && Enemy.y < Static.y + Static.h) {
+        //if between top and bottom of rectangle
+        if (Enemy.x > Static.x + Static.w / 2) {
+          Enemy.x += (Static.x + Static.w) - (Enemy.x - Enemy.radius)
+        }
+        else {
+          Enemy.x += (Static.x) - (Enemy.x + Enemy.radius)
+        }
+      }
+      else if (Enemy.x > Static.x && Enemy.x < Static.x + Static.w) {
+        //if between left and right of rectangle
+        if (Enemy.y > Static.y + Static.h / 2) {
+          Enemy.y += (Static.y + Static.h) - (Enemy.y - Enemy.radius)
+        }
+        else {
+          Enemy.y += (Static.y) - (Enemy.y + Enemy.radius)
+        }
+      }
+
+      else {
+        //if colliding at corners
+        let dx = Enemy.x - Static.x + Static.w / 2;
+        let dy = Enemy.y - Static.y + Static.h / 2;
+        let angle = atan2(dy, dx);
+
+        if (Enemy.y < Static.y) {
+          if (Enemy.x < Static.x + Static.w / 2) {
+            //top left corner
+            angle += 180
+            d = dist(Enemy.x, Enemy.y, Static.x, Static.y) - Enemy.radius;
+            Enemy.x -= d * cos(angle)
+            Enemy.y -= d * sin(angle)
+          }
+          else {
+            // top right
+            d = dist(Enemy.x, Enemy.y, Static.x + Static.w, Static.y) - Enemy.radius;
+            Enemy.x -= d * cos(angle)
+            Enemy.y -= d * sin(angle)
+          }
+        }
+        else {
+          if (Enemy.x < Static.x + Static.w / 2) {
+            //bottom left corner
+            d = dist(Enemy.x, Enemy.y, Static.x, Static.y + Static.h) - Enemy.radius;
+            Enemy.x -= d * cos(angle)
+            Enemy.y -= d * sin(angle)
+          }
+          else {
+            //bottom right
+            d = dist(Enemy.x, Enemy.y, Static.x + Static.w, Static.y + Static.h) - Enemy.radius
+            Enemy.x -= d * cos(angle)
+            Enemy.y -= d * sin(angle)
+
+          }
+        }
+      }
+    }
+  }
+}
+
+function checkpointDistance() {
+  let dx = Player.x - (Checkpoint.x - Checkpoint.w / 2);
+  let dy = Player.y - (Checkpoint.y - Checkpoint.h / 2);
+  let distance = Math.sqrt(dx * dx + dy * dy);
+  isNearCheckpoint = distance <= 100;
+}
+
+function highlightCheckpoint() {
+  if (isNearCheckpoint) {
+    fill(255, 255, 0, 100);
+    rect(Checkpoint.x, Checkpoint.y, Checkpoint.w, Checkpoint.h);
+    if (keyIsDown(69)) {
+      if (hasEnoughScore()) {
+        score -= level.checkpointCost[levelNumber];
+        Checkpoint.x = random(60, width - 60);
+        Checkpoint.y = random(60, height - 60);
+        levelReset();
+        levelNumber++;
+      } else {
+        openDialog(["Not enough hope..."]);
+        checkpointDistance();
+      }
+    }
+  }
+}
+
+function hasEnoughScore() {
+  return score >= level.checkpointCost[levelNumber];
+}
